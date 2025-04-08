@@ -1,42 +1,287 @@
+:root {
+  --primary-color: #0047AB;
+  --primary-light: #E6F0FF;
+  --primary-dark: #003380;
+  --accent-color: #2E8B57;
+  --background-color: #F5F7FA;
+  --card-background: #FFFFFF;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #888888;
+  --border-color: #E0E5EB;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
 #root {
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
+}
+
+/* Header */
+header {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+header h1 {
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  color: var(--text-secondary);
+}
+
+/* Cards and panels */
+.card, .bg-white {
+  background-color: var(--card-background);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Form elements */
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 71, 171, 0.1);
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+  transition: var(--transition);
+  border: none;
+  border-radius: var(--radius);
+}
+
+button.bg-blue-500, button.bg-green-500 {
+  padding: 0.75rem 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.bg-blue-500 {
+  background-color: var(--primary-color);
+}
+
+button.bg-blue-500:hover {
+  background-color: var(--primary-dark);
+}
+
+button.bg-green-500 {
+  background-color: var(--accent-color);
+}
+
+button.bg-green-500:hover {
+  background-color: #236944;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+tr:hover {
+  background-color: var(--primary-light);
+}
+
+/* Charts */
+.recharts-default-tooltip {
+  background-color: var(--card-background) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.recharts-tooltip-label {
+  color: var(--text-secondary) !important;
+  font-weight: 500 !important;
+}
+
+/* Responsive grid */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: 1fr 2fr;
+  }
+  
+  .md\:col-span-1 {
+    grid-column: span 1;
+  }
+  
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+}
+
+/* Utilities */
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-between: space-between;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.text-blue-600 {
+  color: var(--primary-color);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.text-red-500 {
+  color: #e53e3e;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.text-red-500:hover {
+  color: #c53030;
 }
 
-.card {
-  padding: 2em;
+.font-bold {
+  font-weight: 700;
 }
 
-.read-the-docs {
-  color: #888;
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+/* Chart container */
+.h-64 {
+  height: 16rem;
+}
+
+/* Overrides for existing styles */
+.bg-gray-100 {
+  background-color: var(--background-color);
+}
+
+.bg-gray-50 {
+  background-color: var(--primary-light);
+}
+
+.text-gray-500, .text-gray-600 {
+  color: var(--text-secondary);
+}
+
+.text-gray-700, .text-gray-800 {
+  color: var(--text-primary);
+}
+
+/* Filter buttons */
+.flex-1 {
+  flex: 1;
+}
+
+button.bg-gray-100 {
+  background-color: #f0f2f5;
+  color: var(--text-secondary);
+}
+
+/* Make sure icons align properly with text */
+svg {
+  vertical-align: middle;
 }
