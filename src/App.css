@@ -1,3 +1,4 @@
+/* Variáveis globais */
 :root {
   --primary-color: #0047AB;
   --primary-light: #E6F0FF;
@@ -14,6 +15,7 @@
   --transition: all 0.3s ease;
 }
 
+/* Reset e estilos base */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,10 +29,28 @@ body {
   line-height: 1.6;
 }
 
+/* Layout Container */
 #root {
   max-width: 1440px;
   margin: 0 auto;
   padding: 1.5rem;
+}
+
+.dashboard {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Grid Layout */
+.grid {
+  display: grid;
+  gap: 1.5rem;
 }
 
 /* Header */
@@ -50,19 +70,20 @@ header p {
   color: var(--text-secondary);
 }
 
-/* Cards and panels */
-.card, .bg-white {
+/* Cards e Painéis */
+.card {
   background-color: var(--card-background);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: var(--transition);
+  padding: 1.5rem;
 }
 
 .card:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
-/* Form elements */
+/* Formulários */
 input, select {
   width: 100%;
   padding: 0.75rem;
@@ -86,7 +107,7 @@ label {
   color: var(--text-secondary);
 }
 
-/* Buttons */
+/* Botões */
 button {
   cursor: pointer;
   font-weight: 500;
@@ -94,33 +115,45 @@ button {
   transition: var(--transition);
   border: none;
   border-radius: var(--radius);
+  padding: 0.75rem 1rem;
 }
 
-button.bg-blue-500, button.bg-green-500 {
-  padding: 0.75rem 1rem;
+.btn-primary {
+  background-color: var(--primary-color);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-button.bg-blue-500 {
-  background-color: var(--primary-color);
-}
-
-button.bg-blue-500:hover {
+.btn-primary:hover {
   background-color: var(--primary-dark);
 }
 
-button.bg-green-500 {
+.btn-accent {
   background-color: var(--accent-color);
+  color: white;
 }
 
-button.bg-green-500:hover {
+.btn-accent:hover {
   background-color: #236944;
 }
 
-/* Table styles */
+.delete-btn {
+  color: #e53e3e;
+  background: transparent;
+  padding: 0.25rem;
+}
+
+.delete-btn:hover {
+  color: #c53030;
+}
+
+/* Tabelas */
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -143,7 +176,7 @@ tr:hover {
   background-color: var(--primary-light);
 }
 
-/* Charts */
+/* Gráficos */
 .recharts-default-tooltip {
   background-color: var(--card-background) !important;
   border: 1px solid var(--border-color) !important;
@@ -156,10 +189,121 @@ tr:hover {
   font-weight: 500 !important;
 }
 
-/* Responsive grid */
-.grid {
-  display: grid;
-  gap: 1.5rem;
+/* Seletor de visualização */
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.view-toggle button {
+  flex: 1;
+  padding: 0.5rem;
+  background-color: #f0f2f5;
+  color: var(--text-secondary);
+}
+
+.view-toggle button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Classes utilitárias */
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.p-6 { padding: 1.5rem; }
+
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+
+.h-64 { height: 16rem; }
+
+/* Mensagens */
+.empty-message, .no-data-message {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+}
+
+.no-data-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18rem;
+}
+
+/* Responsividade */
+@media (max-width: 767px) {
+  #root, .container {
+    padding: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Layout de tabela em cards para mobile */
+  .mobile-card-layout tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 0.75rem;
+  }
+
+  .mobile-card-layout thead {
+    display: none;
+  }
+
+  .mobile-card-layout td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--border-color);
+  }
+
+  .mobile-card-layout td:last-child {
+    border-bottom: none;
+    justify-content: flex-end;
+  }
+
+  .mobile-card-layout td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  /* Ajustes de formulário mobile */
+  .mobile-actions {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+
+  .h-64 {
+    height: 250px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -174,114 +318,8 @@ tr:hover {
   .md\:col-span-2 {
     grid-column: span 2;
   }
-}
 
-/* Utilities */
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.flex {
-  display: flex;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-between {
-  justify-between: space-between;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-blue-600 {
-  color: var(--primary-color);
-}
-
-.text-red-500 {
-  color: #e53e3e;
-}
-
-.text-red-500:hover {
-  color: #c53030;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.text-xl {
-  font-size: 1.25rem;
-}
-
-.text-2xl {
-  font-size: 1.5rem;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-}
-
-/* Chart container */
-.h-64 {
-  height: 16rem;
-}
-
-/* Overrides for existing styles */
-.bg-gray-100 {
-  background-color: var(--background-color);
-}
-
-.bg-gray-50 {
-  background-color: var(--primary-light);
-}
-
-.text-gray-500, .text-gray-600 {
-  color: var(--text-secondary);
-}
-
-.text-gray-700, .text-gray-800 {
-  color: var(--text-primary);
-}
-
-/* Filter buttons */
-.flex-1 {
-  flex: 1;
-}
-
-button.bg-gray-100 {
-  background-color: #f0f2f5;
-  color: var(--text-secondary);
-}
-
-/* Make sure icons align properly with text */
-svg {
-  vertical-align: middle;
+  .mobile-actions {
+    display: none;
+  }
 }

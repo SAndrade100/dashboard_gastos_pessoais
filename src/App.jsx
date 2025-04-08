@@ -280,65 +280,79 @@ export default function FinancialDashboard() {
     }
   };
 
+  // Novo estado para controlar visualização do formulário em dispositivos móveis
+  const [showMobileForm, setShowMobileForm] = useState(false);
+  
+  // Função para detectar se estamos em um dispositivo móvel
+  const isMobile = () => window.innerWidth <= 767;
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="max-w-7xl mx-auto p-6">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Dashboard de Gastos Financeiros</h1>
-          <p className="text-gray-600">Acompanhe e gerencie seus gastos mensais e anuais</p>
+    <div className="dashboard">
+      <div className="container">
+        <header>
+          <h1>Dashboard de Gastos Financeiros</h1>
+          <p>Acompanhe e gerencie seus gastos mensais e anuais</p>
         </header>
         
+        {/* Botão de adicionar visível apenas em dispositivos móveis */}
+        {isMobile() && (
+          <div className="mobile-actions mb-4">
+            <button 
+              className="bg-blue-500 mobile-add-button" 
+              onClick={() => setShowMobileForm(!showMobileForm)}
+            >
+              {showMobileForm ? 'Fechar formulário' : '+ Adicionar despesa'}
+            </button>
+          </div>
+        )}
+        
         {/* Layout principal - Grid com sidebar e área principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Sidebar - Formulário e filtros */}
-          <div className="lg:col-span-1">
+        <div className="grid md:grid-cols-3">
+          {/* Sidebar - Formulário e filtros - Condicionalmente mostrado em mobile */}
+          <div className={`md:col-span-1 ${isMobile() && !showMobileForm ? 'mobile-hidden' : ''}`}>
             {/* Painel de adicionar despesa */}
-            <div className="bg-white rounded-lg shadow p-6 mb-6">
+            <div className="card mb-6 p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center">
                 <PlusCircle className="mr-2" size={20} /> Adicionar Despesa
               </h2>
               <form onSubmit={addExpense}>
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Descrição</label>
+                  <label>Descrição</label>
                   <input
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md"
                     required
                   />
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Valor (R$)</label>
+                  <label>Valor (R$)</label>
                   <input
                     type="number"
                     step="0.01"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md"
                     required
                     min="0.01"
                   />
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Data</label>
+                  <label>Data</label>
                   <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md"
                     required
                   />
                 </div>
                 
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Categoria</label>
+                  <label>Categoria</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-md"
                   >
                     <option>Alimentação</option>
                     <option>Transporte</option>
@@ -354,7 +368,7 @@ export default function FinancialDashboard() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                  className="bg-blue-500"
                 >
                   Adicionar
                 </button>
@@ -362,22 +376,22 @@ export default function FinancialDashboard() {
             </div>
             
             {/* Painel de filtros */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="card p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center">
                 <Calendar className="mr-2" size={20} /> Filtros
               </h2>
               
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Visualização</label>
-                <div className="flex rounded-md overflow-hidden border">
+              <div className="mb-4 view-selector">
+                <label>Visualização</label>
+                <div className="flex view-toggle">
                   <button
-                    className={`flex-1 py-2 ${viewMode === 'month' ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
+                    className={`flex-1 ${viewMode === 'month' ? 'active' : ''}`}
                     onClick={() => setViewMode('month')}
                   >
                     Mensal
                   </button>
                   <button
-                    className={`flex-1 py-2 ${viewMode === 'year' ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}
+                    className={`flex-1 ${viewMode === 'year' ? 'active' : ''}`}
                     onClick={() => setViewMode('year')}
                   >
                     Anual
@@ -386,11 +400,10 @@ export default function FinancialDashboard() {
               </div>
               
               <div className="mb-4">
-                <label className="block text-gray-700 mb-2">Ano</label>
+                <label>Ano</label>
                 <select
                   value={yearFilter}
                   onChange={(e) => setYearFilter(parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border rounded-md"
                 >
                   {[2023, 2024, 2025].map(year => (
                     <option key={year} value={year}>{year}</option>
@@ -400,11 +413,10 @@ export default function FinancialDashboard() {
               
               {viewMode === 'month' && (
                 <div className="mb-4">
-                  <label className="block text-gray-700 mb-2">Mês</label>
+                  <label>Mês</label>
                   <select
                     value={monthFilter}
                     onChange={(e) => setMonthFilter(parseInt(e.target.value))}
-                    className="w-full px-3 py-2 border rounded-md"
                   >
                     {Array.from({ length: 12 }, (_, i) => i + 1).map(month => (
                       <option key={month} value={month}>
@@ -417,7 +429,7 @@ export default function FinancialDashboard() {
               
               <button
                 onClick={generateChartPDF}
-                className="w-full flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                className="bg-blue-500 flex items-center justify-center"
               >
                 <Download className="mr-2" size={18} /> Exportar Gráfico
               </button>
@@ -425,10 +437,10 @@ export default function FinancialDashboard() {
           </div>
           
           {/* Área principal - Gráficos e tabela */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-2">
             {/* Painel do gráfico */}
-            <div className="bg-white rounded-lg shadow p-6 mb-6">
-              <div className="flex justify-between items-center mb-6">
+            <div className="card p-6 mb-6">
+              <div className="flex justify-between items-center mb-6 expense-total">
                 <h2 className="text-xl font-semibold flex items-center">
                   <DollarSign className="mr-2" size={20} /> 
                   {viewMode === 'month' 
@@ -441,7 +453,7 @@ export default function FinancialDashboard() {
               </div>
               
               {chartData.length > 0 ? (
-                <div className="h-72 mb-6" ref={chartRef}>
+                <div className="h-64 mb-6" ref={chartRef}>
                   <ResponsiveContainer width="100%" height="100%">
                     {viewMode === 'month' ? (
                       <BarChart data={chartData}>
@@ -450,7 +462,7 @@ export default function FinancialDashboard() {
                         <YAxis />
                         <Tooltip formatter={(value) => `R$ ${value.toFixed(2)}`} />
                         <Legend />
-                        <Bar dataKey="amount" fill="#3b82f6" name="Valor" />
+                        <Bar dataKey="amount" fill="#0047AB" name="Valor" />
                       </BarChart>
                     ) : (
                       <LineChart data={chartData}>
@@ -459,47 +471,47 @@ export default function FinancialDashboard() {
                         <YAxis />
                         <Tooltip formatter={(value) => `R$ ${value.toFixed(2)}`} />
                         <Legend />
-                        <Line type="monotone" dataKey="amount" stroke="#3b82f6" name="Total Mensal" />
+                        <Line type="monotone" dataKey="amount" stroke="#0047AB" name="Total Mensal" />
                       </LineChart>
                     )}
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <div className="flex justify-center items-center h-72 text-gray-500">
+                <div className="no-data-message">
                   Sem dados para exibir. Adicione despesas para visualizar o gráfico.
                 </div>
               )}
             </div>
             
             {/* Painel de lista de despesas */}
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="card p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center">
                 <FileText className="mr-2" size={20} /> Lista de Despesas
               </h2>
               
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
+              <div className="table-container">
+                <table className={isMobile() ? 'mobile-card-layout' : ''}>
                   <thead>
-                    <tr className="border-b">
-                      <th className="pb-3">Descrição</th>
-                      <th className="pb-3">Categoria</th>
-                      <th className="pb-3">Data</th>
-                      <th className="pb-3 text-right">Valor</th>
-                      <th className="pb-3 w-10"></th>
+                    <tr>
+                      <th>Descrição</th>
+                      <th>Categoria</th>
+                      <th>Data</th>
+                      <th className="text-right">Valor</th>
+                      <th className="action-column"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredExpenses.length > 0 ? (
                       filteredExpenses.map(expense => (
-                        <tr key={expense.id} className="border-b hover:bg-gray-50">
-                          <td className="py-3">{expense.description}</td>
-                          <td>{expense.category}</td>
-                          <td>{new Date(expense.date).toLocaleDateString('pt-BR')}</td>
-                          <td className="text-right">R$ {expense.amount.toFixed(2)}</td>
-                          <td className="text-right">
+                        <tr key={expense.id}>
+                          <td data-label="Descrição">{expense.description}</td>
+                          <td data-label="Categoria">{expense.category}</td>
+                          <td data-label="Data">{new Date(expense.date).toLocaleDateString('pt-BR')}</td>
+                          <td data-label="Valor" className="text-right">R$ {expense.amount.toFixed(2)}</td>
+                          <td>
                             <button 
                               onClick={() => removeExpense(expense.id)}
-                              className="text-red-500 hover:text-red-700"
+                              className="delete-btn"
                               title="Remover"
                             >
                               <Trash2 size={18} />
@@ -509,7 +521,7 @@ export default function FinancialDashboard() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="py-4 text-center text-gray-500">
+                        <td colSpan="5" className="empty-message">
                           Nenhuma despesa encontrada para o período selecionado.
                         </td>
                       </tr>
