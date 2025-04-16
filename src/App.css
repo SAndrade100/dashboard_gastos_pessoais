@@ -38,49 +38,59 @@ body {
 
 .dashboard {
   min-height: 100vh;
-  background-color: var(--background-color);
+  background-color: #f5f6fa;
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 /* Grid Layout */
 .grid {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
 }
 
 /* Header */
 header {
   margin-bottom: 2rem;
-  text-align: left;
+  text-align: center;
 }
 
 header h1 {
-  color: var(--primary-color);
-  font-size: 1.75rem;
-  font-weight: 700;
+  color: #2c3e50;
   margin-bottom: 0.5rem;
 }
 
 header p {
-  color: var(--text-secondary);
+  color: #7f8c8d;
 }
 
-/* Cards e Painéis */
-.card {
-  background-color: var(--card-background);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  transition: var(--transition);
+/* Sidebar */
+.sidebar {
+  background: white;
   padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.card:hover {
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Sections */
+.chart-section,
+.list-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Formulários */
@@ -306,6 +316,29 @@ tr:hover {
   }
 }
 
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-actions {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar.mobile-show {
+    display: block;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:grid-cols-3 {
     grid-template-columns: 1fr 2fr;
@@ -322,4 +355,18 @@ tr:hover {
   .mobile-actions {
     display: none;
   }
+}
+
+.mobile-add-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mobile-add-button:hover {
+  background: #2980b9;
 }
