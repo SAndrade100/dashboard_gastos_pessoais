@@ -4,6 +4,7 @@ import ExpenseList from './components/ExpenseList';
 import ExpenseChart from './components/ExpenseChart';
 import { useExpenses } from './hooks/useExpenses';
 import { FilterPanel } from './components/FilterPanel';
+import './App.css'
 
 export default function FinancialDashboard() {
   const { expenses, addExpense, removeExpense } = useExpenses();
